@@ -21,6 +21,8 @@ public class Report {
     @JoinColumn(name = "receipt_id", nullable = false)
     private Receipt receipt;
 
+    public Report() {}
+
     public Integer getId() {
         return id;
     }

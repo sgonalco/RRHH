@@ -46,6 +46,9 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Employee employee;
 
+    public User() {
+    }
+
     public Integer getId() {
         return id;
     }

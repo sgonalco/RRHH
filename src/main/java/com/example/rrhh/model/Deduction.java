@@ -27,6 +27,8 @@ public class Deduction {
     @ManyToMany(mappedBy = "deductions")
     private Set<Employee> employees = new HashSet<>();
 
+    public Deduction() {}
+
     public Integer getId() {
         return id;
     }

@@ -38,6 +38,8 @@ public class Payroll {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
+    public Payroll() {}
+
     public Integer getId() {
         return id;
     }

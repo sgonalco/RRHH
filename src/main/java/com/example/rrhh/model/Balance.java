@@ -28,6 +28,8 @@ public class Balance {
     @JoinColumn(name = "employee_id", nullable = false, unique = true)
     private Employee employee;
 
+    public Balance() {}
+
     public Integer getId() {
         return id;
     }

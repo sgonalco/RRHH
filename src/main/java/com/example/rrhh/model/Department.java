@@ -41,6 +41,8 @@ public class Department {
     )
     private Set<Goal> goals = new HashSet<>();
 
+    public Department() {}
+
     public Integer getId() {
         return id;
     }

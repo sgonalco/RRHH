@@ -24,6 +24,8 @@ public class LeaveNotification {
     @JoinColumn(name = "notification_id", nullable = false)
     private Notification notification;
 
+    public LeaveNotification() {}
+
     public Integer getId() {
         return id;
     }

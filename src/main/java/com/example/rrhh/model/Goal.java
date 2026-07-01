@@ -32,6 +32,8 @@ public class Goal {
     @ManyToMany(mappedBy = "goals")
     private Set<Department> departments = new HashSet<>();
 
+    public Goal() {}
+
     public Integer getId() {
         return id;
     }

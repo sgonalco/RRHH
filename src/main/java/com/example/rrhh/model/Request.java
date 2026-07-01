@@ -44,6 +44,8 @@ public class Request {
     @OneToMany(mappedBy = "request")
     private Set<LeaveNotification> leaveNotifications = new HashSet<>();
 
+    public Request() {}
+
     public Integer getId() {
         return id;
     }

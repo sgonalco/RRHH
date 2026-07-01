@@ -1,5 +1,7 @@
 package com.example.rrhh.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,6 +11,8 @@ public class UserDto {
     private Integer id;
     private String username;
     private String email;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Set<Integer> roleIds = new HashSet<>();
@@ -39,6 +43,14 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -31,6 +31,8 @@ public class Salary {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
+    public Salary() {}
+
     public Integer getId() {
         return id;
     }

@@ -24,6 +24,8 @@ public class Receipt {
     @JoinColumn(name = "payroll_id", nullable = false)
     private Payroll payroll;
 
+    public Receipt() {}
+
     public Integer getId() {
         return id;
     }

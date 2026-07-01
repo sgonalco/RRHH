@@ -45,6 +45,8 @@ public class Absence {
     @OneToMany(mappedBy = "absence")
     private Set<AbsenceNotification> absenceNotifications = new HashSet<>();
 
+    public Absence() {}
+
     public Integer getId() {
         return id;
     }

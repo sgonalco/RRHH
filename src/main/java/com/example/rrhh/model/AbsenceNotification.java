@@ -24,6 +24,8 @@ public class AbsenceNotification {
     @JoinColumn(name = "notification_id", nullable = false)
     private Notification notification;
 
+    public AbsenceNotification() {}
+
     public Integer getId() {
         return id;
     }

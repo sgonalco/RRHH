@@ -89,6 +89,8 @@ public class Employee {
     @OneToOne(mappedBy = "employee")
     private Balance balance = new Balance();
 
+    public Employee() {}
+
     public Integer getId() {
         return id;
     }

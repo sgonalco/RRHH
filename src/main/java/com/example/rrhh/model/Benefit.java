@@ -27,6 +27,8 @@ public class Benefit {
     @ManyToMany(mappedBy = "benefits")
     private Set<Employee> employees = new HashSet<>();
 
+    public Benefit() {}
+
     public Integer getId() {
         return id;
     }

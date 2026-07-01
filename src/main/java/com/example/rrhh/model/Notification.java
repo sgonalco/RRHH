@@ -36,6 +36,8 @@ public class Notification {
     @OneToMany(mappedBy = "notification")
     private Set<LeaveNotification> leaveNotifications = new HashSet<>();
 
+    public Notification() {}
+
     public Integer getId() {
         return id;
     }
