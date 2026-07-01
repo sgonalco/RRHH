@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "REQUEST")
@@ -38,6 +40,9 @@ public class Request {
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
+
+    @OneToMany(mappedBy = "request")
+    private Set<LeaveNotification> leaveNotifications = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -101,5 +106,13 @@ public class Request {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Set<LeaveNotification> getLeaveNotifications() {
+        return leaveNotifications;
+    }
+
+    public void setLeaveNotifications(Set<LeaveNotification> leaveNotifications) {
+        this.leaveNotifications = leaveNotifications;
     }
 }

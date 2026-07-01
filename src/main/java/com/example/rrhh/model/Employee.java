@@ -83,6 +83,9 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     private Set<Request> requests = new HashSet<>();
 
+    @OneToMany(mappedBy = "employee")
+    private Set<Notification> notifications = new HashSet<>();
+
     @OneToOne(mappedBy = "employee")
     private Balance balance = new Balance();
 
@@ -244,6 +247,14 @@ public class Employee {
 
     public void setRequests(Set<Request> requests) {
         this.requests = requests;
+    }
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(Set<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public Balance getBalance() {

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "ABSENCE")
@@ -39,6 +41,9 @@ public class Absence {
     @ManyToOne
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
+
+    @OneToMany(mappedBy = "absence")
+    private Set<AbsenceNotification> absenceNotifications = new HashSet<>();
 
     public Integer getId() {
         return id;
@@ -102,5 +107,13 @@ public class Absence {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Set<AbsenceNotification> getAbsenceNotifications() {
+        return absenceNotifications;
+    }
+
+    public void setAbsenceNotifications(Set<AbsenceNotification> absenceNotifications) {
+        this.absenceNotifications = absenceNotifications;
     }
 }

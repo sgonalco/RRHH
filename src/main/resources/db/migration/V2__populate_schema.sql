@@ -3,26 +3,26 @@
 -- =====================================================
 
 INSERT INTO USER (id, username, password, email, created_at, updated_at) VALUES
-    (1,'admin','admin123','admin@company.com','2026-01-01','2026-01-01'),
-    (2,'jdoe','password123','john@company.com','2026-01-01','2026-01-01'),
-    (3,'asmith','password123','anna@company.com','2026-01-01','2026-01-01');
+                                                                             (1,'admin','admin123','admin@company.com','2026-01-01 09:00:00','2026-01-01 09:00:00'),
+                                                                             (2,'jdoe','password123','john@company.com','2026-01-01 09:00:00','2026-01-01 09:00:00'),
+                                                                             (3,'asmith','password123','anna@company.com','2026-01-01 09:00:00','2026-01-01 09:00:00');
 
 -- =====================================================
 -- 2. ROLES
 -- =====================================================
 
 INSERT INTO ROLE (id,name) VALUES
-    (1,'Administrator'),
-    (2,'Manager'),
-    (3,'Employee');
+                               (1,'Administrator'),
+                               (2,'Manager'),
+                               (3,'Employee');
 
-INSERT INTO USER_ROLES VALUES
-    (1,1),
-    (2,2),
-    (3,3);
+INSERT INTO USER_ROLES (user_id, role_id) VALUES
+                                              (1,1),
+                                              (2,2),
+                                              (3,3);
 
 -- =====================================================
--- 3. DEPARTMENTS (manager_id NULL)
+-- 3. DEPARTMENTS (manager_id initially NULL)
 -- =====================================================
 
 INSERT INTO DEPARTMENT
@@ -38,12 +38,12 @@ VALUES
 INSERT INTO GOAL
 (id,title,description,status,start_date,end_date)
 VALUES
-    (1,'Reduce turnover','Lower turnover by 10%','Active','2026-01-01','2026-12-31'),
-    (2,'Upgrade infrastructure','Replace old servers','In Progress','2026-02-01','2026-09-30');
+    (1,'Reduce turnover','Lower employee turnover','Active','2026-01-01','2026-12-31'),
+    (2,'Upgrade infrastructure','Replace legacy servers','In Progress','2026-02-01','2026-09-30');
 
 INSERT INTO DEPARTMENT_GOALS VALUES
-    (1,1),
-    (2,2);
+                                 (1,1),
+                                 (2,2);
 
 -- =====================================================
 -- 5. EMPLOYEES
@@ -61,9 +61,7 @@ VALUES
      '555-1002','anna@company.com','456 Oak Ave',
      '2024-03-10',4200,2,'Software Engineer','Active',3);
 
--- =====================================================
--- 6. UPDATE DEPARTMENT MANAGERS
--- =====================================================
+-- Assign managers after employees exist
 
 UPDATE DEPARTMENT
 SET manager_id = 1
@@ -74,21 +72,25 @@ SET manager_id = 2
 WHERE id = 2;
 
 -- =====================================================
--- 7. BENEFITS / DEDUCTIONS
+-- 6. BENEFITS
 -- =====================================================
 
 INSERT INTO BENEFIT VALUES
                         (1,'Health Insurance','Private insurance',300),
                         (2,'Transportation','Monthly allowance',100);
 
-INSERT INTO DEDUCTION VALUES
-                          (1,'Income Tax','Government tax',500),
-                          (2,'Social Security','Mandatory contribution',250);
-
 INSERT INTO EMPLOYEE_BENEFITS VALUES
                                   (1,1),
                                   (1,2),
                                   (2,1);
+
+-- =====================================================
+-- 7. DEDUCTIONS
+-- =====================================================
+
+INSERT INTO DEDUCTION VALUES
+                          (1,'Income Tax','Government tax',500),
+                          (2,'Social Security','Mandatory contribution',250);
 
 INSERT INTO EMPLOYEE_DEDUCTIONS VALUES
                                     (1,1),
@@ -100,9 +102,11 @@ INSERT INTO EMPLOYEE_DEDUCTIONS VALUES
 -- 8. SALARY HISTORY
 -- =====================================================
 
-INSERT INTO SALARY VALUES
-                       (1,1,4500,5000,'2025-01-01','Annual raise'),
-                       (2,2,4000,4200,'2025-06-01','Performance review');
+INSERT INTO SALARY
+(id,employee_id,old_salary,new_salary,change_date,reason)
+VALUES
+    (1,1,4500,5000,'2025-01-01','Annual raise'),
+    (2,2,4000,4200,'2025-06-01','Performance review');
 
 -- =====================================================
 -- 9. PAYROLL
@@ -118,64 +122,91 @@ VALUES
 -- 10. RECEIPTS
 -- =====================================================
 
-INSERT INTO RECEIPT VALUES
-                        (1,1,'Base Salary',5000,'Income'),
-                        (2,1,'Income Tax',500,'Deduction'),
-                        (3,2,'Base Salary',4200,'Income'),
-                        (4,2,'Income Tax',500,'Deduction');
+INSERT INTO RECEIPT
+(id,payroll_id,concept,amount,type)
+VALUES
+    (1,1,'Base Salary',5000,'Income'),
+    (2,1,'Income Tax',500,'Deduction'),
+    (3,2,'Base Salary',4200,'Income'),
+    (4,2,'Income Tax',500,'Deduction');
 
 -- =====================================================
 -- 11. REPORTS
 -- =====================================================
 
-INSERT INTO REPORT VALUES
-                       (1,1,'January',2026),
-                       (2,3,'January',2026);
+INSERT INTO REPORT
+(id,receipt_id,month,year)
+VALUES
+    (1,1,'January',2026),
+    (2,3,'January',2026);
 
 -- =====================================================
--- 12. ABSENCE
+-- 12. ABSENCES
 -- =====================================================
 
 INSERT INTO ABSENCE
 (id,employee_id,start_date,end_date,type,reason,status,created_at)
 VALUES
     (1,2,'2026-02-10','2026-02-12',
-     'Sick Leave','Flu','Approved','2026-02-09');
+     'Sick Leave','Flu','Approved','2026-02-09 09:00:00');
 
 -- =====================================================
--- 13. REQUEST
+-- 13. LEAVE REQUESTS
 -- =====================================================
 
 INSERT INTO REQUEST
 (id,employee_id,days_requested,start_date,end_date,reason,status,created_at)
 VALUES
-    (1,1,5,'2026-04-01','2026-04-05',
-     'Family vacation','Approved','2026-03-01');
+    (1,1,5,
+     '2026-04-01',
+     '2026-04-05',
+     'Family vacation',
+     'Approved',
+     '2026-03-01 08:30:00');
 
 -- =====================================================
 -- 14. NOTIFICATIONS
 -- =====================================================
 
-INSERT INTO NOTIFICATION VALUES
-                             (1,'Your absence has been approved.','2026-02-09 10:00:00',0),
-                             (2,'Your leave request has been approved.','2026-03-02 09:00:00',1);
+INSERT INTO NOTIFICATION
+(id, message, sent_date, read, employee_id)
+VALUES
+    (1,
+     'Your sick leave has been approved.',
+     '2026-02-09 10:00:00',
+     0,
+     2),
+
+    (2,
+     'Your vacation request has been approved.',
+     '2026-03-02 09:00:00',
+     1,
+     1);
 
 -- =====================================================
--- 15. LINK NOTIFICATIONS
+-- 15. ABSENCE NOTIFICATIONS
 -- =====================================================
 
-INSERT INTO ABSENCE_NOTIFICATION VALUES
-    (1,1,1,2);
-
-INSERT INTO LEAVE_NOTIFICATION VALUES
-    (1,1,2,1);
+INSERT INTO ABSENCE_NOTIFICATION
+(id, absence_id, notification_id)
+VALUES
+    (1, 1, 1);
 
 -- =====================================================
--- 16. VACATION BALANCE
+-- 16. LEAVE NOTIFICATIONS
+-- =====================================================
+
+INSERT INTO LEAVE_NOTIFICATION
+(id, request_id, notification_id)
+VALUES
+    (1, 1, 2);
+
+-- =====================================================
+-- 17. VACATION BALANCE
 -- =====================================================
 
 INSERT INTO BALANCE
-(id,employee_id,total_days,used_days,days_remaining,updated_at)
+(id, employee_id, total_days, used_days, days_remaining, updated_at)
 VALUES
     (1,1,25,5,20,'2026-03-02'),
     (2,2,25,2,23,'2026-02-12');
