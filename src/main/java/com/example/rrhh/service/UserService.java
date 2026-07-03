@@ -6,6 +6,7 @@ import com.example.rrhh.model.Role;
 import com.example.rrhh.model.User;
 import com.example.rrhh.repo.RoleRepo;
 import com.example.rrhh.repo.UserRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,7 @@ public class UserService {
         );
     }
 
+    @Transactional
     public UserDto save(UserDto userDto) {
 
         // create new user object with new dto attributes
@@ -79,6 +81,7 @@ public class UserService {
         return userMapper.userToDto(savedUser);
     }
 
+    @Transactional
     public UserDto update(Integer id, UserDto userDto) {
         User existing = userRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -104,12 +107,6 @@ public class UserService {
         return userMapper.userToDto(updatedUser);
     }
 
-    public void deleteByid(Integer id) {
-        User user  = userRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        userRepo.delete(user);
-    }
-
     public UserDto authenticateUser(String username, String password) {
         User user = userRepo.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -120,7 +117,8 @@ public class UserService {
         }
     }
 
-    public UserDto changePassword(String username, String oldPassword, String newPassword) {
+    @Transactional
+    public UserDto changePassword(String username, String newPassword) {
         User user = userRepo.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.setPassword(newPassword);
@@ -129,6 +127,7 @@ public class UserService {
         return userMapper.userToDto(updatedUser);
     }
 
+    @Transactional
     public UserDto changeStatus(String username, String newStatus) {
         User user = userRepo.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -136,5 +135,12 @@ public class UserService {
         user.setUpdatedAt(LocalDateTime.now());
         User updatedUser = userRepo.save(user);
         return userMapper.userToDto(updatedUser);
+    }
+
+    @Transactional
+    public void deleteByid(Integer id) {
+        User user  = userRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        userRepo.delete(user);
     }
 }
