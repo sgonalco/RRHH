@@ -2,6 +2,7 @@ package com.example.rrhh.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class UserDto {
@@ -15,6 +16,8 @@ public class UserDto {
     private String email;
     private String status;
     private Set<Integer> roleIds;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Integer getId() {
         return id;
@@ -62,5 +65,21 @@ public class UserDto {
 
     public void setRoleIds(Set<Integer> roleIds) {
         this.roleIds = roleIds;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

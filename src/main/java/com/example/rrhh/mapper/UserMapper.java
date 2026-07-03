@@ -20,6 +20,8 @@ public class UserMapper {
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());
         userDto.setStatus(user.getStatus());
+        userDto.setCreatedAt(user.getCreatedAt());
+        userDto.setUpdatedAt(user.getUpdatedAt());
 
         userDto.setRoleIds(user.getRoles().
                 stream()
