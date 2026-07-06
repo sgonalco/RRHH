@@ -6,6 +6,7 @@ import com.example.rrhh.model.Department;
 import com.example.rrhh.model.Project;
 import com.example.rrhh.repo.DepartmentRepo;
 import com.example.rrhh.repo.ProjectRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +58,7 @@ public class DepartmentService {
     public List<EmployeeDto> getAllEmployees(DepartmentDto department)
      */
 
+    @Transactional
     public DepartmentDto save(DepartmentDto dto) {
 
         Department department = new Department();
@@ -80,6 +82,7 @@ public class DepartmentService {
         );
     }
 
+    @Transactional
     public DepartmentDto update(DepartmentDto dto, Integer id) {
 
         Department existing = departmentRepo.findById(id)
@@ -94,6 +97,7 @@ public class DepartmentService {
         );
     }
 
+    @Transactional
     public DepartmentDto assignProject(Integer departmentId, Integer projectId) {
 
         Department department = departmentRepo.findById(departmentId)
@@ -109,6 +113,7 @@ public class DepartmentService {
         );
     }
 
+    @Transactional
     public DepartmentDto updateManager(Integer departmentId, Integer managerId) {
 
         Department department = departmentRepo.findById(departmentId)
@@ -121,6 +126,7 @@ public class DepartmentService {
         );
     }
 
+    @Transactional
     public void deleteById(Integer id) {
         departmentRepo.deleteById(id);
     }
