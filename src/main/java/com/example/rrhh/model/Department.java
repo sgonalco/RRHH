@@ -26,6 +26,9 @@ public class Department {
     @Column(name = "manager_id", nullable = false)
     private Integer managerId;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "created_at")
     private LocalDate createdAt;
 
@@ -87,5 +90,13 @@ public class Department {
 
     public void setProjects(Set<Project> projects) {
         this.projects = projects;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
