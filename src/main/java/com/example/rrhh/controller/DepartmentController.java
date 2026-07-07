@@ -23,7 +23,7 @@ public class DepartmentController {
         return departmentService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{departmentId}")
     public DepartmentDto getDepartmentById (@PathVariable @Positive Integer departmentId) {
         return departmentService.findById(departmentId);
     }
@@ -49,10 +49,12 @@ public class DepartmentController {
         return departmentService.update(departmentDto, departmentId);
     }
 
-    @PutMapping("/assignProject/{departmentId}/{projectId}") // presentar como duda
+    @PutMapping("/assignProject/{departmentId}") // presentar como duda
     public DepartmentDto assignProject(@PathVariable @Positive Integer departmentId,
-                                       @PathVariable @Positive Integer projectId) {
-        return departmentService.assignProject(departmentId,projectId);
+                                       @RequestBody DepartmentDto departmentDto) {
+
+        System.out.println("assignProject called");
+        return departmentService.assignProject(departmentId,departmentDto);
     }
 
     @PutMapping("/updateManager/{departmentId}/{managerId}")

@@ -16,7 +16,7 @@ public class DepartmentMapper {
 
         departmentDto.setId(department.getId());
         departmentDto.setName(department.getName());
-        departmentDto.setDescription(department.getDescription());
+        departmentDto.setManagerId(department.getManagerId());
         departmentDto.setCreatedAt(department.getCreatedAt());
 
         departmentDto.setProjectIds(

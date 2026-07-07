@@ -63,18 +63,16 @@ public class DepartmentService {
 
         Department department = new Department();
 
-        department.setId(dto.getId());
         department.setName(dto.getName());
         department.setManagerId(dto.getManagerId());
-        department.setDescription(dto.getDescription());
         department.setCreatedAt(dto.getCreatedAt());
 
         Set<Project> projects = dto.getProjectIds()
                 .stream()
-                .map(projectRepo::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
+                    .map(projectRepo::findById)
+                        .filter(Optional::isPresent)
+                            .map(Optional::get)
+                                .collect(Collectors.toSet());
 
         department.setProjects(projects);
         return departmentMapper.toDto(
@@ -89,7 +87,6 @@ public class DepartmentService {
                 .orElseThrow(() -> new RuntimeException("Department not found"));
 
         existing.setName(dto.getName());
-        existing.setDescription(dto.getDescription());
         // pendiente de modificar + agregar/eliminar empleados
 
         return departmentMapper.toDto(
@@ -98,18 +95,22 @@ public class DepartmentService {
     }
 
     @Transactional
-    public DepartmentDto assignProject(Integer departmentId, Integer projectId) {
-
-        Department department = departmentRepo.findById(departmentId)
+    public DepartmentDto assignProject(Integer departmentId, DepartmentDto departmentDto) {
+        System.out.println("Service entered");
+        Department existing = departmentRepo.findById(departmentId)
                 .orElseThrow(() -> new RuntimeException("Department not found"));
 
-        Project project = projectRepo.findById(projectId)
-                .orElseThrow(() -> new RuntimeException("Project not found"));
-
-        department.getProjects().add(project);
-
+        existing.setProjects(
+                departmentDto.getProjectIds()
+                .stream()
+                    .map(projectRepo::findById)
+                        .filter(Optional::isPresent)
+                            .map(Optional::get)
+                                .collect(Collectors.toSet())
+        );
+        System.out.println("Saving finished");
         return departmentMapper.toDto(
-                departmentRepo.save(department)
+                departmentRepo.save(existing)
         );
     }
 

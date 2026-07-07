@@ -1,14 +1,13 @@
 package com.example.rrhh.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 public class DepartmentDto {
 
-    private int id;
+    private Integer id;
     private String name;
-    private String description;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     private Integer managerId;
     private Set<Integer> projectIds;
 
@@ -28,19 +27,11 @@ public class DepartmentDto {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

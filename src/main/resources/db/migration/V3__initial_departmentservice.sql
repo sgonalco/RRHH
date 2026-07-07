@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS PROJECT (
     description TEXT NOT NULL,
     status TEXT,
     department_id INTEGER NOT NULL,
-    start_date DATE,
-    end_date DATE,
+    start_date TEXT,
+    end_date TEXT,
     FOREIGN KEY (department_id) REFERENCES DEPARTMENT(id) ON DELETE CASCADE
 );

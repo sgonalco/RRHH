@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS USER (
     password TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     status TEXT,
-    created_at DATETIME,
-    updated_at DATETIME
+    created_at TEXT,
+    updated_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS ROLE (
