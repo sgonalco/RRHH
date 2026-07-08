@@ -2,6 +2,8 @@ package com.example.rrhh.controller;
 
 import com.example.rrhh.dto.RoleDto;
 import com.example.rrhh.service.RoleService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,11 +29,16 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public RoleDto getRoleById(@PathVariable Integer id) {
+    public RoleDto getRoleById(@PathVariable @Positive Integer id) {
         return roleService.findById(id);
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/createRole")
+    public RoleDto createRole(@RequestBody @Valid RoleDto roleDto) {
+        return roleService.save(roleDto);
+    }
+
+    @DeleteMapping("/delete/{id}")
     public void deleteRoleById(@PathVariable Integer id) {
         roleService.deleteById(id);
     }
