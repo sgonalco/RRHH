@@ -1,6 +1,5 @@
 package com.example.rrhh.controller;
 
-import com.example.rrhh.dto.RoleDto;
 import com.example.rrhh.dto.UserDto;
 import com.example.rrhh.service.UserService;
 import jakarta.validation.Valid;

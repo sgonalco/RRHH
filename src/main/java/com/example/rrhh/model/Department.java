@@ -30,7 +30,7 @@ public class Department {
     private LocalDateTime createdAt;
 
     @OneToMany(
-            mappedBy = "departmentId",
+            mappedBy = "department",
             cascade = CascadeType.ALL
     )
     private Set<Project> projects = new HashSet<>();
