@@ -1,5 +1,6 @@
 package com.example.rrhh.controller;
 
+import com.example.rrhh.dto.RoleDto;
 import com.example.rrhh.dto.UserDto;
 import com.example.rrhh.service.UserService;
 import jakarta.validation.Valid;
@@ -71,8 +72,14 @@ public class UserController {
         return userService.update(id, userDto);
     }
 
+    @PutMapping("/assignRole/{id}")
+    public UserDto assignRole(@PathVariable @Positive Integer id,
+                              @RequestBody @Valid UserDto userDto) {
+        return userService.assignRole(id, userDto);
+    }
+
     @DeleteMapping("/delete/{id}")
-    public void deleteUser(@RequestParam @Positive Integer id) {
-        userService.deleteByid(id);
+    public void deleteUser(@PathVariable @Positive Integer id) {
+        userService.deleteById(id);
     }
 }

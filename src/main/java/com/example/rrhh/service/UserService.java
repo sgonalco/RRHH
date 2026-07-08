@@ -1,5 +1,6 @@
 package com.example.rrhh.service;
 
+import com.example.rrhh.dto.RoleDto;
 import com.example.rrhh.dto.UserDto;
 import com.example.rrhh.mapper.UserMapper;
 import com.example.rrhh.model.Role;
@@ -94,16 +95,6 @@ public class UserService {
         existing.setUpdatedAt(userDto.getUpdatedAt());
         existing.setUpdatedAt(LocalDateTime.now());
 
-        Set<Role> roles = userDto.getRoleIds()
-                .stream()
-                .map(roleRepo::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
-
-        // set and save roles in db
-        existing.setRoles(roles);
-
         User updatedUser = userRepo.save(existing);
         return userMapper.userToDto(updatedUser);
     }
@@ -116,6 +107,21 @@ public class UserService {
         }else {
             throw new RuntimeException("Wrong password");
         }
+    }
+
+    @Transactional
+    public UserDto assignRole(Integer userId, UserDto userDto) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setRoles(
+                userDto.getRoleIds()
+                        .stream()
+                        .map(roleRepo::findById)
+                        .filter(Optional::isPresent)
+                        .map(Optional::get)
+                .collect(Collectors.toSet())
+        );
+        return userMapper.userToDto(userRepo.save(user));
     }
 
     @Transactional
@@ -139,7 +145,7 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteByid(Integer id) {
+    public void deleteById(Integer id) {
         User user  = userRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         userRepo.delete(user);
