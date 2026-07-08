@@ -1,5 +1,6 @@
 package com.example.rrhh.dto;
 
+import com.example.rrhh.model.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ public class UserDto {
 
     private String email;
     private String status;
-    private Set<Integer> roleIds;
+    private Set<Role> roles; // cambiar a set de objeto role
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -59,12 +60,12 @@ public class UserDto {
         this.status = status;
     }
 
-    public Set<Integer> getRoleIds() {
-        return roleIds;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRoleIds(Set<Integer> roleIds) {
-        this.roleIds = roleIds;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public LocalDateTime getCreatedAt() {

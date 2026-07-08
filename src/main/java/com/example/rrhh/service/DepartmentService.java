@@ -21,7 +21,7 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepo departmentRepo;
 
-    @Autowired
+    @Autowired // sustituir por projectservice
     private ProjectRepo projectRepo;
 
     @Autowired
@@ -67,6 +67,7 @@ public class DepartmentService {
         department.setManagerId(dto.getManagerId());
         department.setCreatedAt(dto.getCreatedAt());
 
+        // modificar segun filosofia de userservice
         Set<Project> projects = dto.getProjectIds()
                 .stream()
                     .map(projectRepo::findById)

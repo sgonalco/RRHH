@@ -31,7 +31,7 @@ public class Project {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 
@@ -91,5 +91,5 @@ public class Project {
 
     public void setDepartment(Department department) {
         this.department = department;
-    }
+    } // añadir al objeto departamento en su lista este proyecto: department.addProject(this)
 }

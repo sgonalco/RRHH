@@ -23,7 +23,7 @@ public class UserMapper {
         userDto.setCreatedAt(user.getCreatedAt());
         userDto.setUpdatedAt(user.getUpdatedAt());
 
-        userDto.setRoleIds(
+        userDto.setRoles(
                 user.getRoles().
                     stream()
                     .map(Role::getId)

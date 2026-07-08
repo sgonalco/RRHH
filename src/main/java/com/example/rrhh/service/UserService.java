@@ -2,6 +2,7 @@ package com.example.rrhh.service;
 
 import com.example.rrhh.dto.RoleDto;
 import com.example.rrhh.dto.UserDto;
+import com.example.rrhh.mapper.RoleMapper;
 import com.example.rrhh.mapper.UserMapper;
 import com.example.rrhh.model.Role;
 import com.example.rrhh.model.User;
@@ -24,10 +25,13 @@ public class UserService {
     private UserRepo userRepo;
 
     @Autowired
-    private RoleRepo roleRepo;
+    private RoleService roleService;
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
     public List<UserDto> findAll() {
         return userRepo.findAll()
@@ -66,21 +70,9 @@ public class UserService {
         user.setStatus(userDto.getStatus());
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
-
-        // map entity roles to integer ids
-        Set<Role> roles = userDto.getRoleIds()
-                .stream()
-                .map(roleRepo::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
-
-        // set and save roles in db
-        user.setRoles(roles);
-        User savedUser = userRepo.save(user);
-
+        user.setRoles(userDto.getRoles());
         // Convert back to DTO
-        return userMapper.userToDto(savedUser);
+        return userMapper.userToDto(userRepo.save(user));
     }
 
     @Transactional
@@ -110,17 +102,25 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto assignRole(Integer userId, UserDto userDto) {
+    public UserDto assignRole(Integer userId, RoleDto roleDto) { // pasarle dto role
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        user.setRoles(
-                userDto.getRoleIds()
-                        .stream()
-                        .map(roleRepo::findById)
-                        .filter(Optional::isPresent)
-                        .map(Optional::get)
-                .collect(Collectors.toSet())
-        );
+        UserDto userDto = userMapper.userToDto(user);
+        // comprobar si existe o no el role (utilizar metodo de roleservice) NO USAR ROLEREPO
+        RoleDto existingRole = roleService.findById(roleDto.getId());
+        if (existingRole == null) {
+            throw new RuntimeException("ROLE DOES NOT EXIST");
+        }
+        if(!userDto.getRoles().contains(existingRole)) {
+            Role role = new Role();
+            role.setId(existingRole.getId());
+            role.setTitle(existingRole.getTitle());
+            userDto.getRoles().add(role);
+        }else {
+            throw new RuntimeException("USER ALREADY HAS ROLE ASSIGNED");
+        }
+        // si no existe: mandar a crearlo con roleservice
+        // si existe: hacer user.getroles, comprobar si ya tiene asignado, y añadir el objeto role a ese set en caso contrario
         return userMapper.userToDto(userRepo.save(user));
     }
 

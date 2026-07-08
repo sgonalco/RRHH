@@ -1,5 +1,6 @@
 package com.example.rrhh.controller;
 
+import com.example.rrhh.dto.RoleDto;
 import com.example.rrhh.dto.UserDto;
 import com.example.rrhh.service.UserService;
 import jakarta.validation.Valid;
@@ -73,8 +74,8 @@ public class UserController {
 
     @PutMapping("/assignRole/{id}")
     public UserDto assignRole(@PathVariable @Positive Integer id,
-                              @RequestBody @Valid UserDto userDto) {
-        return userService.assignRole(id, userDto);
+                              @RequestBody @Valid RoleDto roleDto) { // asignar cuerpo dto de rol
+        return userService.assignRole(id, roleDto);
     }
 
     @DeleteMapping("/delete/{id}")

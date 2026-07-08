@@ -88,4 +88,10 @@ public class Department {
         this.projects = projects;
     }
 
+    // metodo publico de addProject a la lista de este proyecto y establecer relacion inversa
+        // comprobar si el objeto project ya esta en la lista
+        // en caso contrario agregar el project
+        // Comprobar si el usuario del objeto proyecto no es el mismo project.getDepartment() != this y añadirlo para establecer relación inversa
+
+
 }

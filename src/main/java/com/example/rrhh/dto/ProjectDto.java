@@ -10,6 +10,7 @@ public class ProjectDto {
     private String status;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+    private Integer departmentId;
 
     public Integer getId() {
         return id;
@@ -21,6 +22,14 @@ public class ProjectDto {
 
     public String getTitle() {
         return title;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 
     public void setTitle(String title) {

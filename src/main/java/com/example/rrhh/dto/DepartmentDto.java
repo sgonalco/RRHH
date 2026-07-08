@@ -9,7 +9,7 @@ public class DepartmentDto {
     private String name;
     private LocalDateTime createdAt;
     private Integer managerId;
-    private Set<Integer> projectIds;
+    private Set<Integer> projectIds; // Enchufarle el objeto project
 
     public int getId() {
         return id;
