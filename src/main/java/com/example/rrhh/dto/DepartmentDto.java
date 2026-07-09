@@ -1,5 +1,7 @@
 package com.example.rrhh.dto;
 
+import com.example.rrhh.model.Project;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -9,7 +11,7 @@ public class DepartmentDto {
     private String name;
     private LocalDateTime createdAt;
     private Integer managerId;
-    private Set<Integer> projectIds; // Enchufarle el objeto project
+    private Set<ProjectDto> projects; // Enchufarle el objeto project
 
     public int getId() {
         return id;
@@ -43,11 +45,11 @@ public class DepartmentDto {
         this.managerId = managerId;
     }
 
-    public Set<Integer> getProjectIds() {
-        return projectIds;
+    public Set<ProjectDto> getProjects() {
+        return projects;
     }
 
-    public void setProjectIds(Set<Integer> projectIds) {
-        this.projectIds = projectIds;
+    public void setProjects(Set<ProjectDto> projects) {
+        this.projects = projects;
     }
 }

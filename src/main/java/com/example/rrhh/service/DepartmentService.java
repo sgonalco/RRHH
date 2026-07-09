@@ -1,7 +1,9 @@
 package com.example.rrhh.service;
 
 import com.example.rrhh.dto.DepartmentDto;
+import com.example.rrhh.dto.ProjectDto;
 import com.example.rrhh.mapper.DepartmentMapper;
+import com.example.rrhh.mapper.ProjectMapper;
 import com.example.rrhh.model.Department;
 import com.example.rrhh.model.Project;
 import com.example.rrhh.repo.DepartmentRepo;
@@ -23,6 +25,9 @@ public class DepartmentService {
 
     @Autowired // sustituir por projectservice
     private ProjectRepo projectRepo;
+
+    @Autowired
+    private ProjectService projectService;
 
     @Autowired
     private DepartmentMapper departmentMapper;
@@ -66,19 +71,15 @@ public class DepartmentService {
         department.setName(dto.getName());
         department.setManagerId(dto.getManagerId());
         department.setCreatedAt(dto.getCreatedAt());
-
-        // modificar segun filosofia de userservice
-        Set<Project> projects = dto.getProjectIds()
+        department.setProjects(dto.getProjects()
                 .stream()
-                    .map(projectRepo::findById)
-                        .filter(Optional::isPresent)
-                            .map(Optional::get)
-                                .collect(Collectors.toSet());
-
-        department.setProjects(projects);
-        return departmentMapper.toDto(
-                departmentRepo.save(department)
+                .map(p -> projectRepo.findById(p.getId())
+                .orElseThrow(() -> new RuntimeException("Project not found")))
+                .collect(Collectors.toSet())
         );
+
+        // falta por corregir este metodo
+
     }
 
     @Transactional
@@ -102,7 +103,7 @@ public class DepartmentService {
                 .orElseThrow(() -> new RuntimeException("Department not found"));
 
         existing.setProjects(
-                departmentDto.getProjectIds()
+                departmentDto.getProjects()
                 .stream()
                     .map(projectRepo::findById)
                         .filter(Optional::isPresent)

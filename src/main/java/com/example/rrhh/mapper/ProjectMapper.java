@@ -15,7 +15,23 @@ public class ProjectMapper {
         projectDto.setStatus(project.getStatus());
         projectDto.setStartDate(project.getStartDate());
         projectDto.setEndDate(project.getEndDate());
+        projectDto.setDepartmentId(project.getDepartment().getId());
 
         return projectDto;
+    }
+
+    public Project toEntity(ProjectDto projectDto) {
+        if (projectDto == null) return null;
+
+        Project project = new Project();
+
+        project.setId(projectDto.getId());
+        project.setDescription(projectDto.getDescription());
+        project.setTitle(projectDto.getTitle());
+        project.setStatus(projectDto.getStatus());
+        project.setStartDate(projectDto.getStartDate());
+        project.setEndDate(projectDto.getEndDate());
+
+        return project;
     }
 }
