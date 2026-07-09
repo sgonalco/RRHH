@@ -93,5 +93,34 @@ public class Department {
         // en caso contrario agregar el project
         // Comprobar si el usuario del objeto proyecto no es el mismo project.getDepartment() != this y añadirlo para establecer relación inversa
 
+    public void addProject(Project project) {
+
+        if (project == null) {
+            return;
+        }
+
+        // Only add if it isn't already present
+        if (!projects.contains(project)) {
+            projects.add(project);
+        }
+
+        // Synchronize the inverse side
+        if (project.getDepartment() != this) {
+            project.setDepartment(this);
+        }
+    }
+
+    public void removeProject(Project project) {
+
+        if (project == null) {
+            return;
+        }
+
+        if (projects.remove(project)) {
+            if (project.getDepartment() == this) {
+                project.setDepartment(null);
+            }
+        }
+    }
 
 }

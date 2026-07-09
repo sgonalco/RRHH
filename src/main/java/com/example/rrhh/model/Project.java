@@ -90,6 +90,15 @@ public class Project {
     }
 
     public void setDepartment(Department department) {
+
+        if (this.department == department) {
+            return;
+        }
+
         this.department = department;
-    } // añadir al objeto departamento en su lista este proyecto: department.addProject(this)
+
+        if (department != null && !department.getProjects().contains(this)) {
+            department.getProjects().add(this);
+        }
+    }
 }
