@@ -13,6 +13,7 @@ public class UserMapper {
     public UserDto userToDto(User user) {
         if(user == null) return null;
 
+        RoleMapper roleMapper = new RoleMapper();
         UserDto userDto = new UserDto();
 
         userDto.setId(user.getId());
@@ -22,12 +23,10 @@ public class UserMapper {
         userDto.setStatus(user.getStatus());
         userDto.setCreatedAt(user.getCreatedAt());
         userDto.setUpdatedAt(user.getUpdatedAt());
-
-        userDto.setRoles(
-                user.getRoles().
-                    stream()
-                    .map(Role::getId)
-                    .collect(Collectors.toSet())
+        userDto.setRoles(user.getRoles()
+                .stream()
+                .map(role -> roleMapper.toDto(role))
+                .collect(Collectors.toSet())
         );
 
         return  userDto;

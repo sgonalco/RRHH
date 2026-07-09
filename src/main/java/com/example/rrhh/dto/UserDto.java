@@ -16,7 +16,7 @@ public class UserDto {
 
     private String email;
     private String status;
-    private Set<Role> roles; // cambiar a set de objeto role
+    private Set<RoleDto> roles; // cambiar a set de objeto role
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -60,11 +60,11 @@ public class UserDto {
         this.status = status;
     }
 
-    public Set<Role> getRoles() {
+    public Set<RoleDto> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<RoleDto> roles) {
         this.roles = roles;
     }
 

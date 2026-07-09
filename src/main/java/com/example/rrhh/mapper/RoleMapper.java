@@ -15,4 +15,14 @@ public class RoleMapper {
         roleDto.setTitle(role.getTitle());
         return roleDto;
     }
+
+    public Role toEntity(RoleDto dto) {
+        if (dto == null) return null;
+
+        Role role = new Role();
+        role.setId(dto.getId());
+        role.setTitle(dto.getTitle());
+
+        return role;
+    }
 }

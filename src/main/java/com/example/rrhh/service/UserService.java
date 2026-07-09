@@ -70,7 +70,11 @@ public class UserService {
         user.setStatus(userDto.getStatus());
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
-        user.setRoles(userDto.getRoles());
+        user.setRoles(userDto.getRoles()
+                .stream()
+                .map(roleMapper::toEntity)
+                .collect(Collectors.toSet())
+        );
         // Convert back to DTO
         return userMapper.userToDto(userRepo.save(user));
     }
@@ -106,21 +110,15 @@ public class UserService {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         UserDto userDto = userMapper.userToDto(user);
-        // comprobar si existe o no el role (utilizar metodo de roleservice) NO USAR ROLEREPO
         RoleDto existingRole = roleService.findById(roleDto.getId());
         if (existingRole == null) {
             throw new RuntimeException("ROLE DOES NOT EXIST");
         }
         if(!userDto.getRoles().contains(existingRole)) {
-            Role role = new Role();
-            role.setId(existingRole.getId());
-            role.setTitle(existingRole.getTitle());
-            userDto.getRoles().add(role);
+            userDto.getRoles().add(existingRole);
         }else {
             throw new RuntimeException("USER ALREADY HAS ROLE ASSIGNED");
         }
-        // si no existe: mandar a crearlo con roleservice
-        // si existe: hacer user.getroles, comprobar si ya tiene asignado, y añadir el objeto role a ese set en caso contrario
         return userMapper.userToDto(userRepo.save(user));
     }
 
