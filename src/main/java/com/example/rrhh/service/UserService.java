@@ -33,6 +33,9 @@ public class UserService {
     @Autowired
     private RoleMapper roleMapper;
 
+    @Autowired
+    private RoleRepo roleRepo;
+
     public List<UserDto> findAll() {
         return userRepo.findAll()
                 .stream()
@@ -105,6 +108,7 @@ public class UserService {
         }
     }
 
+    /*
     @Transactional
     public UserDto assignRole(Integer userId, RoleDto roleDto) { // pasarle dto role
         User user = userRepo.findById(userId)
@@ -119,6 +123,25 @@ public class UserService {
         }else {
             throw new RuntimeException("USER ALREADY HAS ROLE ASSIGNED");
         }
+        return userMapper.userToDto(userRepo.save(user));
+    }
+     */
+
+    @Transactional
+    public UserDto assignRole(Integer userId, RoleDto roleDto) {
+
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Role role = roleRepo.findById(roleDto.getId())
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+
+        if (!user.getRoles().contains(role)) {
+            user.getRoles().add(role);
+        } else {
+            throw new RuntimeException("User already has role assigned");
+        }
+
         return userMapper.userToDto(userRepo.save(user));
     }
 
