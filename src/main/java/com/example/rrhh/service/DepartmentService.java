@@ -75,10 +75,13 @@ public class DepartmentService {
         if (dto.getProjects() != null) {
             dto.getProjects()
                     .stream()
-                    .map(p -> projectRepo.findById(p.getId())
+                    .map(p -> projectRepo.findById(p.getId()) // utilizar el servicio y el mapeo a entidad
                             .orElseThrow(() -> new RuntimeException("Project not found")))
                     .forEach(department::addProject);
         }
+
+        // obtener el proyecto por id, llamar project service
+
 
         return departmentMapper.toDto(departmentRepo.save(department));
     }

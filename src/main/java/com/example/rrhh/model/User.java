@@ -30,10 +30,10 @@ public class User {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", columnDefinition = "TEXT")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", columnDefinition = "TEXT")
     private LocalDateTime updatedAt;
 
     @ManyToMany

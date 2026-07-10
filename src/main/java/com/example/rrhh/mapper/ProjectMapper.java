@@ -1,6 +1,8 @@
 package com.example.rrhh.mapper;
 
+import com.example.rrhh.dto.DepartmentDto;
 import com.example.rrhh.dto.ProjectDto;
+import com.example.rrhh.model.Department;
 import com.example.rrhh.model.Project;
 
 public class ProjectMapper {
@@ -18,5 +20,14 @@ public class ProjectMapper {
         projectDto.setDepartmentId(project.getDepartment().getId());
 
         return projectDto;
+    }
+
+    public Project toEntity(ProjectDto projectDto) {
+        if (projectDto == null) return null;
+
+        // crear entidad de proyecto
+        // settear atributos planos (hacer la transferencia atributos dto a entidad con set)
+        //
+        return null;
     }
 }

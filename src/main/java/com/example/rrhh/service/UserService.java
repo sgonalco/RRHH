@@ -106,24 +106,26 @@ public class UserService {
         }
     }
 
-    /*
+    // USAR ESTE
     @Transactional
-    public UserDto assignRole(Integer userId, RoleDto roleDto) { // pasarle dto role
+    public UserDto assignRole2(Integer userId, RoleDto roleDto) { // pasarle dto role
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        UserDto userDto = userMapper.userToDto(user);
+
         RoleDto existingRole = roleService.findById(roleDto.getId());
+
+        Role role = roleMapper.toEntity(existingRole);
+
         if (existingRole == null) {
             throw new RuntimeException("ROLE DOES NOT EXIST");
         }
-        if(!userDto.getRoles().contains(existingRole)) {
-            userDto.getRoles().add(existingRole);
+        if(!user.getRoles().contains(role)) {
+            user.getRoles().add(role);
         }else {
             throw new RuntimeException("USER ALREADY HAS ROLE ASSIGNED");
         }
         return userMapper.userToDto(userRepo.save(user));
     }
-     */
 
     @Transactional
     public UserDto assignRole(Integer userId, RoleDto roleDto) {
