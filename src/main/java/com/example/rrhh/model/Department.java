@@ -64,14 +64,6 @@ public class Department {
         this.managerId = managerId;
     }
 
-    public Set<Project> getGoals() {
-        return projects;
-    }
-
-    public void setGoals(Set<Project> projects) {
-        this.projects = projects;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }

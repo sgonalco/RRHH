@@ -1,6 +1,7 @@
 package com.example.rrhh.controller;
 
 import com.example.rrhh.dto.DepartmentDto;
+import com.example.rrhh.dto.ProjectDto;
 import com.example.rrhh.service.DepartmentService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -51,10 +52,8 @@ public class DepartmentController {
 
     @PutMapping("/assignProject/{departmentId}") // presentar como duda
     public DepartmentDto assignProject(@PathVariable @Positive Integer departmentId,
-                                       @RequestBody DepartmentDto departmentDto) {
-
-        System.out.println("assignProject called");
-        return departmentService.assignProject(departmentId,departmentDto);
+                                       @RequestBody ProjectDto projectDto) {
+        return departmentService.assignProject(departmentId,projectDto);
     }
 
     @PutMapping("/updateManager/{departmentId}/{managerId}")

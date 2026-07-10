@@ -27,26 +27,25 @@ public class DepartmentService {
     private ProjectRepo projectRepo;
 
     @Autowired
-    private ProjectService projectService;
-
-    @Autowired
     private DepartmentMapper departmentMapper;
 
     public List<DepartmentDto> findAll() {
+
         return departmentRepo.findAll()
                 .stream()
                 .map(departmentMapper::toDto)
                 .toList();
-
     }
 
     public DepartmentDto findById(Integer id) {
+
         return departmentMapper.toDto(departmentRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Department not found"))
         );
     }
 
     public DepartmentDto findByName(String name) {
+
         return departmentMapper.toDto(departmentRepo.findByName(name)
                 .orElseThrow(() -> new RuntimeException("Department not found"))
         );
@@ -54,6 +53,7 @@ public class DepartmentService {
 
     // pendiente por modificar: managerid es clave foranea de entidad empleado
     public DepartmentDto findByManagerId(Integer managerId){
+
         return departmentMapper.toDto(departmentRepo.findByManagerId(managerId)
             .orElseThrow(() -> new RuntimeException("Department not found"))
         );
@@ -71,15 +71,16 @@ public class DepartmentService {
         department.setName(dto.getName());
         department.setManagerId(dto.getManagerId());
         department.setCreatedAt(dto.getCreatedAt());
-        department.setProjects(dto.getProjects()
-                .stream()
-                .map(p -> projectRepo.findById(p.getId())
-                .orElseThrow(() -> new RuntimeException("Project not found")))
-                .collect(Collectors.toSet())
-        );
 
-        // falta por corregir este metodo
+        if (dto.getProjects() != null) {
+            dto.getProjects()
+                    .stream()
+                    .map(p -> projectRepo.findById(p.getId())
+                            .orElseThrow(() -> new RuntimeException("Project not found")))
+                    .forEach(department::addProject);
+        }
 
+        return departmentMapper.toDto(departmentRepo.save(department));
     }
 
     @Transactional
@@ -97,23 +98,21 @@ public class DepartmentService {
     }
 
     @Transactional
-    public DepartmentDto assignProject(Integer departmentId, DepartmentDto departmentDto) {
-        System.out.println("Service entered");
-        Department existing = departmentRepo.findById(departmentId)
+    public DepartmentDto assignProject(Integer departmentId, ProjectDto projectDto) {
+
+        Department department = departmentRepo.findById(departmentId)
                 .orElseThrow(() -> new RuntimeException("Department not found"));
 
-        existing.setProjects(
-                departmentDto.getProjects()
-                .stream()
-                    .map(projectRepo::findById)
-                        .filter(Optional::isPresent)
-                            .map(Optional::get)
-                                .collect(Collectors.toSet())
-        );
-        System.out.println("Saving finished");
-        return departmentMapper.toDto(
-                departmentRepo.save(existing)
-        );
+        Project project = projectRepo.findById(projectDto.getId())
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+
+        if(!department.getProjects().contains(project)) {
+            department.addProject(project);
+        } else {
+            throw new RuntimeException("Department already has project assigned");
+        }
+
+        return departmentMapper.toDto(departmentRepo.save(department));
     }
 
     @Transactional

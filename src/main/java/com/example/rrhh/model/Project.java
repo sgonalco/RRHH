@@ -95,7 +95,12 @@ public class Project {
             return;
         }
 
+        Department oldDepartment = this.department;
         this.department = department;
+
+        if (oldDepartment != null) {
+            oldDepartment.getProjects().remove(this);
+        }
 
         if (department != null && !department.getProjects().contains(this)) {
             department.getProjects().add(this);
