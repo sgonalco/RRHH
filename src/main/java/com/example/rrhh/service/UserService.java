@@ -108,7 +108,7 @@ public class UserService {
 
     // USAR ESTE
     @Transactional
-    public UserDto assignRole2(Integer userId, RoleDto roleDto) { // pasarle dto role
+    public UserDto assignRole(Integer userId, RoleDto roleDto) { // pasarle dto role
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -127,6 +127,7 @@ public class UserService {
         return userMapper.userToDto(userRepo.save(user));
     }
 
+    /* METODO EXPERIMENTAL
     @Transactional
     public UserDto assignRole(Integer userId, RoleDto roleDto) {
 
@@ -144,6 +145,7 @@ public class UserService {
 
         return userMapper.userToDto(userRepo.save(user));
     }
+     */
 
     @Transactional
     public UserDto changePassword(String username, String newPassword) {

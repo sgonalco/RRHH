@@ -27,7 +27,13 @@ public class DepartmentService {
     private ProjectRepo projectRepo;
 
     @Autowired
+    private ProjectService projectService;
+
+    @Autowired
     private DepartmentMapper departmentMapper;
+
+    @Autowired
+    private ProjectMapper projectMapper;
 
     public List<DepartmentDto> findAll() {
 
@@ -100,6 +106,7 @@ public class DepartmentService {
         );
     }
 
+    /*
     @Transactional
     public DepartmentDto assignProject(Integer departmentId, ProjectDto projectDto) {
 
@@ -112,6 +119,29 @@ public class DepartmentService {
         if(!department.getProjects().contains(project)) {
             department.addProject(project);
         } else {
+            throw new RuntimeException("Department already has project assigned");
+        }
+
+        return departmentMapper.toDto(departmentRepo.save(department));
+    }
+     */
+
+    // metodo experimental
+    @Transactional
+    public DepartmentDto assignProject(Integer departmentId, ProjectDto projectDto) {
+
+        Department department = departmentRepo.findById(departmentId)
+                .orElseThrow(() -> new RuntimeException("Department not found"));
+
+        ProjectDto existingProject = projectService.findById(projectDto.getId());
+
+        Project project = projectMapper.toEntity(existingProject, department);
+
+        if(existingProject == null) {
+            throw new RuntimeException("Project not found");
+        }if (!department.getProjects().contains(project)) {
+            department.addProject(project);
+        }else {
             throw new RuntimeException("Department already has project assigned");
         }
 

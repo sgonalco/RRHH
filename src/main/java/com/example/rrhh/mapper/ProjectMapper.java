@@ -22,12 +22,22 @@ public class ProjectMapper {
         return projectDto;
     }
 
-    public Project toEntity(ProjectDto projectDto) {
+    public Project toEntity(ProjectDto projectDto, Department department) {
         if (projectDto == null) return null;
 
         // crear entidad de proyecto
         // settear atributos planos (hacer la transferencia atributos dto a entidad con set)
-        //
-        return null;
+
+        Project project = new Project();
+
+        project.setId(projectDto.getId());
+        project.setDescription(projectDto.getDescription());
+        project.setTitle(projectDto.getTitle());
+        project.setStatus(projectDto.getStatus());
+        project.setStartDate(projectDto.getStartDate());
+        project.setEndDate(projectDto.getEndDate());
+        project.setDepartment(department);
+
+        return project;
     }
 }
