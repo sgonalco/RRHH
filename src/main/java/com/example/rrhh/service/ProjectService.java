@@ -2,6 +2,7 @@ package com.example.rrhh.service;
 
 import com.example.rrhh.dto.ProjectDto;
 import com.example.rrhh.mapper.ProjectMapper;
+import com.example.rrhh.model.Project;
 import com.example.rrhh.repo.ProjectRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,8 @@ public class ProjectService {
         );
     }
 
-
+    public Project findEntityById(Integer id) {
+        return projectRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+    }
 }

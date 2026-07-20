@@ -69,6 +69,7 @@ public class DepartmentService {
     public List<EmployeeDto> getAllEmployees(DepartmentDto department)
      */
 
+    /*
     @Transactional
     public DepartmentDto save(DepartmentDto dto) {
 
@@ -86,8 +87,23 @@ public class DepartmentService {
                     .forEach(department::addProject);
         }
 
-        // obtener el proyecto por id, llamar project service
+        return departmentMapper.toDto(departmentRepo.save(department));
+    }
+     */
 
+    @Transactional
+    public DepartmentDto save2(DepartmentDto dto) {
+
+        Department department = new Department();
+
+        department.setName(dto.getName());
+        department.setManagerId(dto.getManagerId());
+        department.setCreatedAt(dto.getCreatedAt());
+        if (dto.getProjects() != null) {
+            dto.getProjects().stream()
+                    .map(p -> projectService.findEntityById(p.getId()))
+                    .forEach(department::addProject);
+        }
 
         return departmentMapper.toDto(departmentRepo.save(department));
     }
