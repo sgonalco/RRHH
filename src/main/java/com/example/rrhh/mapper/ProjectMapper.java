@@ -1,10 +1,11 @@
 package com.example.rrhh.mapper;
 
-import com.example.rrhh.dto.DepartmentDto;
 import com.example.rrhh.dto.ProjectDto;
 import com.example.rrhh.model.Department;
 import com.example.rrhh.model.Project;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProjectMapper {
     public ProjectDto toDto(Project project) {
         if (project == null) return null;

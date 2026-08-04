@@ -2,9 +2,6 @@ package com.example.rrhh.mapper;
 
 import com.example.rrhh.dto.DepartmentDto;
 import com.example.rrhh.model.Department;
-import com.example.rrhh.model.Project;
-import com.example.rrhh.repo.ProjectRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;

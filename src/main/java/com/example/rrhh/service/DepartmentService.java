@@ -66,28 +66,6 @@ public class DepartmentService {
     public List<EmployeeDto> getAllEmployees(DepartmentDto department)
      */
 
-    /*
-    @Transactional
-    public DepartmentDto save(DepartmentDto dto) {
-
-        Department department = new Department();
-
-        department.setName(dto.getName());
-        department.setManagerId(dto.getManagerId());
-        department.setCreatedAt(dto.getCreatedAt());
-
-        if (dto.getProjects() != null) {
-            dto.getProjects()
-                    .stream()
-                    .map(p -> projectRepo.findById(p.getId()) // utilizar el servicio y el mapeo a entidad
-                            .orElseThrow(() -> new RuntimeException("Project not found")))
-                    .forEach(department::addProject);
-        }
-
-        return departmentMapper.toDto(departmentRepo.save(department));
-    }
-     */
-
     @Transactional
     public DepartmentDto save(DepartmentDto dto) {
 
@@ -118,26 +96,6 @@ public class DepartmentService {
                 departmentRepo.save(existing)
         );
     }
-
-    /*
-    @Transactional
-    public DepartmentDto assignProject(Integer departmentId, ProjectDto projectDto) {
-
-        Department department = departmentRepo.findById(departmentId)
-                .orElseThrow(() -> new RuntimeException("Department not found"));
-
-        Project project = projectRepo.findById(projectDto.getId())
-                .orElseThrow(() -> new RuntimeException("Project not found"));
-
-        if(!department.getProjects().contains(project)) {
-            department.addProject(project);
-        } else {
-            throw new RuntimeException("Department already has project assigned");
-        }
-
-        return departmentMapper.toDto(departmentRepo.save(department));
-    }
-     */
 
     // metodo experimental
     @Transactional

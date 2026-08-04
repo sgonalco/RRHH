@@ -37,6 +37,4 @@ public class ProjectController {
         return projectService.findByTitle(projectTitle);
     }
 
-
-
 }
