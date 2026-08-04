@@ -23,9 +23,6 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepo departmentRepo;
 
-    @Autowired // sustituir por projectservice
-    private ProjectRepo projectRepo;
-
     @Autowired
     private ProjectService projectService;
 
@@ -92,7 +89,7 @@ public class DepartmentService {
      */
 
     @Transactional
-    public DepartmentDto save2(DepartmentDto dto) {
+    public DepartmentDto save(DepartmentDto dto) {
 
         Department department = new Department();
 

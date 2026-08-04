@@ -24,7 +24,7 @@ public class DepartmentController {
         return departmentService.findAll();
     }
 
-    @GetMapping("/{departmentId}")
+    @GetMapping("/id/{departmentId}")
     public DepartmentDto getDepartmentById (@PathVariable @Positive Integer departmentId) {
         return departmentService.findById(departmentId);
     }
