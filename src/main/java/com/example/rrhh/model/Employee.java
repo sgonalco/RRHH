@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "EMPLOYEE")
 public class Employee {
@@ -11,7 +14,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
 
     @NotBlank
     @Column(name = "first_name", nullable = false)
@@ -64,6 +67,20 @@ public class Employee {
     @NotNull
     @Column(name = "user_id", nullable = false)
     private int userId;
+
+    @ManyToMany
+    @JoinTable(
+            name = "EMPLOYEE_BENEFITS",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "benefit_id"))
+    private Set<Benefit> benefits = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "EMPLOYEE_DEDUCTIONS",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "deduction_id"))
+    private Set<Deduction> deductions = new HashSet<>();
 
     public Employee() {}
 
@@ -177,5 +194,21 @@ public class Employee {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public Set<Benefit> getBenefits() {
+        return benefits;
+    }
+
+    public void setBenefits(Set<Benefit> benefits) {
+        this.benefits = benefits;
+    }
+
+    public Set<Deduction> getDeductions() {
+        return deductions;
+    }
+
+    public void setDeductions(Set<Deduction> deductions) {
+        this.deductions = deductions;
     }
 }
