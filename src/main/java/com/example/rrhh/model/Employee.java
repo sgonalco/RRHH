@@ -48,10 +48,6 @@ public class Employee {
     @Column(name = "hire_date", nullable = false)
     private String hireDate;
 
-    @NotBlank
-    @Column(name = "salary", nullable = false)
-    private String salary;
-
     @NotNull
     @Column(name = "department_id", nullable = false)
     private int departmentId;
@@ -81,6 +77,12 @@ public class Employee {
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "deduction_id"))
     private Set<Deduction> deductions = new HashSet<>();
+
+    @OneToOne(
+            mappedBy = "employee",
+            cascade = CascadeType.ALL
+    )
+    private Salary salary;
 
     public Employee() {}
 
@@ -156,14 +158,6 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    public String getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
-    }
-
     public int getDepartmentId() {
         return departmentId;
     }
@@ -211,4 +205,13 @@ public class Employee {
     public void setDeductions(Set<Deduction> deductions) {
         this.deductions = deductions;
     }
+
+    public Salary getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Salary salary) {
+        this.salary = salary;
+    }
+
 }

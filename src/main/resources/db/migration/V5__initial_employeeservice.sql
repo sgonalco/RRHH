@@ -3,12 +3,11 @@ CREATE TABLE IF NOT EXISTS EMPLOYEE (
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     dni TEXT NOT NULL UNIQUE,
-    birthdate DATE,
+    birthdate TEXT,
     phone_number TEXT,
     email TEXT,
     address TEXT,
     hire_date DATE,
-    salary INTEGER,
     department_id INTEGER,
     position TEXT,
     status TEXT,
@@ -49,10 +48,10 @@ CREATE TABLE IF NOT EXISTS EMPLOYEE_DEDUCTIONS (
 
 CREATE TABLE IF NOT EXISTS SALARY (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    employee_id INTEGER NOT NULL,
+    employee_id INTEGER UNIQUE NOT NULL,
     old_salary INTEGER,
     new_salary INTEGER,
-    change_date DATE,
+    change_date TEXT,
     reason TEXT,
     FOREIGN KEY(employee_id) REFERENCES EMPLOYEE(id) ON DELETE CASCADE
 );
